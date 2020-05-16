@@ -21,8 +21,8 @@ const IndexPage = () => {
   }, [])
 
   const authorize = () => {
-    const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
-    const redirectUri = process.env.NEXT_PUBLIC_REDIRECT
+    const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID
+    const redirectUri = window.location.origin
     const queryParams = `client_id=${clientId}&redirect_uri=${redirectUri}&scope=user-read-private,user-read-email&response_type=token`
     
     window.location.href = `https://accounts.spotify.com/authorize?${queryParams}`
