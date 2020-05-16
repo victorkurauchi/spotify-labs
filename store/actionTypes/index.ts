@@ -1,1 +1,5 @@
 export const SET_ACCOUNT_INFO = 'SET_ACCOUNT_INFO'
+export const SET_ALBUMS = 'SET_ALBUMS'
+export const SET_TRACKS = 'SET_TRACKS'
+export const SET_ARTISTS = 'SET_ARTISTS'
+export const SET_IN_BULK = 'SET_IN_BULK'

@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link'
-import { Row, Col, Typography, Alert } from 'antd'
-
-const { Text } = Typography
+import { Row, Col, Alert } from 'antd'
 
 type Props = {
   msg: string;

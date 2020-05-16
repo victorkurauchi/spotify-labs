@@ -1,17 +1,15 @@
 import React from 'react';
-import { Breadcrumb, Row, Col, Typography, Spin, Card, Avatar, notification } from 'antd'
+import { Breadcrumb, Row, Col, Typography, Spin, notification } from 'antd'
 import { getHashParams } from '../utils/url'
 import { useAppStateContainer } from '../context/application';
 import { getHost } from '../utils/config';
 import Layout from '../components/Layout'
 import ErrorHint from '../components/Error';
 import { SET_ACCOUNT_INFO } from '../store/actionTypes';
-import { SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons'
 import Profile from '../components/Profile';
 import Link from 'next/link';
 
 const { Text, Title } = Typography
-const { Meta } = Card
 
 const renderLoading = () => (
   <Row>
@@ -64,29 +62,6 @@ const CallbackPage = () => {
     window.localStorage.setItem('token', query.access_token)
     fetchUser()
   }, []);
-
-  const showUser = () => (
-    <Card
-      style={{ width: 300 }}
-      cover={
-        <img
-          alt={accountState.account?.display_name}
-          src={accountState.account?.images[0].url}
-        />
-      }
-      actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />,
-      ]}
-    >
-      <Meta
-        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-        title={accountState.account?.display_name}
-        description={accountState.account?.email}
-      />
-    </Card>
-  )
 
   return (
     <Layout>

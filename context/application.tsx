@@ -1,15 +1,15 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import { accountReducer, AccountStateType, accountInitialState } from '../store/reducers/account';
-// import { filterReducer, FilterStateType, filtersInitialState } from '../reducers/playlist';
+import { playlistReducer, PlaylistStateType, playlistInitialState } from '../store/reducers/playlist';
 import { Action } from '../interfaces/action';
 
 type InitialStateType = {
-  // filtersState: FilterStateType;
+  playlistState: PlaylistStateType;
   accountState: AccountStateType;
 }
 
 const initialState = {
-  // filtersState: filtersInitialState,
+  playlistState: playlistInitialState,
   accountState: accountInitialState,
 }
 
@@ -21,8 +21,8 @@ const AppContext = createContext<{
   dispatch: () => null
 });
 
-const mainReducer = ({ accountState }: InitialStateType, action: Action) => ({
-  // filtersState: filterReducer(filtersState, action),
+const mainReducer = ({ accountState, playlistState }: InitialStateType, action: Action) => ({
+  playlistState: playlistReducer(playlistState, action),
   accountState: accountReducer(accountState, action),
 });
 
