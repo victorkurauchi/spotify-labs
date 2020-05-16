@@ -8,6 +8,8 @@ type Props = {
 const TrackCatalog = ({ data }: Props) => {
   if (!data?.items?.length) return <Empty />
 
+  // on notification, add to playlist
+
   return (
     <List
       className="demo-loadmore-list"
@@ -17,7 +19,7 @@ const TrackCatalog = ({ data }: Props) => {
       dataSource={data.items}
       renderItem={item => (
         <List.Item
-          actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+          actions={[<a key="list-loadmore-edit">add to playlist</a>, <a key="list-loadmore-more">listen</a>]}
         >
           <Skeleton avatar title={false} loading={false} active>
             <List.Item.Meta
