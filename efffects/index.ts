@@ -1,7 +1,6 @@
-import { getHost } from "../utils/config"
+import { getHost } from '../utils/config'
 import { notification } from 'antd'
-import { SET_ACCOUNT_INFO } from "../store/actionTypes"
-
+import { SET_ACCOUNT_INFO } from '../store/actionTypes'
 
 export async function fetchUser(dispatch: Function) {
   const url = getHost()
@@ -15,6 +14,7 @@ export async function fetchUser(dispatch: Function) {
   
   if (response.error) {
     console.log(`Code: ${response.error.status} / ${response.error.message}`)
+    // dispatch error
     return
   }
 

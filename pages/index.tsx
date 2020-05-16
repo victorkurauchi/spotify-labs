@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb, Input, Row, Col, Button } from 'antd'
+import { Breadcrumb, Input, Row, Col, Button, Tabs } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import Layout from '../components/Layout'
 import { getHost } from '../utils/config';
@@ -7,15 +7,13 @@ import { fetchUser } from '../efffects';
 import { useAppStateContainer } from '../context/application';
 import { SET_IN_BULK } from '../store/actionTypes';
 import AlbumCatalog from '../components/Catalog/AlbumCatalog';
+import TrackCatalog from '../components/Catalog/TrackCatalog';
+import ArtistCatalog from '../components/Catalog/ArtistCatalog';
 const debounce = require('lodash.debounce')
 
 const { Search } = Input
 
-type Props = {
-  user: any;
-}
-
-const IndexPage = ({ user }: Props) => {
+const IndexPage = () => {
   const { dispatch, state } = useAppStateContainer()
 
   React.useEffect(() => {
@@ -49,6 +47,10 @@ const IndexPage = ({ user }: Props) => {
     }
   }
 
+  function callback(key: any) {
+    console.log(key);
+  }
+
   return (
     <Layout>
       <Breadcrumb style={{ margin: '16px 0' }}>
@@ -56,7 +58,7 @@ const IndexPage = ({ user }: Props) => {
         <Breadcrumb.Item>App</Breadcrumb.Item>
       </Breadcrumb>
       <div className="site-layout-content">
-        { !user && (
+        { !state.accountState.account && (
           <Row gutter={[16, 24]}>
             <Col className="gutter-row" span={12} offset={6}>
               <Button
@@ -82,7 +84,15 @@ const IndexPage = ({ user }: Props) => {
           </Col>
         </Row>
 
-        { state.playlistState.albums && (<AlbumCatalog data={state.playlistState.albums} />)}
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <Tabs.TabPane tab="Catalog" key="1">
+            { state.playlistState.artists && (<ArtistCatalog data={state.playlistState.artists} />)}
+            { state.playlistState.albums && (<AlbumCatalog data={state.playlistState.albums} />)}
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Tracks" key="2">
+            { state.playlistState.tracks && (<TrackCatalog data={state.playlistState.tracks} />)}
+          </Tabs.TabPane>
+        </Tabs>
       </div>
     </Layout>
   )
