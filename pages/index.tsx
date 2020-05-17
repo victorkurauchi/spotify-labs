@@ -36,8 +36,9 @@ const IndexPage = () => {
           authorization: `Bearer ${window.localStorage.getItem('token')}`
         }
       })
+      
       const data = await res.json()
-      console.log(data)
+      
       if (data) {
         dispatch({
           type: SET_IN_BULK,
@@ -79,7 +80,7 @@ const IndexPage = () => {
               placeholder="Lets bring you some songs :)"
               enterButton="Search"
               size="large"
-              onSearch={debounce(applySearch, 500)}
+              onSearch={applySearch}
             />
           </Col>
         </Row>
@@ -90,7 +91,7 @@ const IndexPage = () => {
             { state.playlistState.albums && (<AlbumCatalog data={state.playlistState.albums} />)}
           </Tabs.TabPane>
           <Tabs.TabPane tab="Tracks" key="2">
-            { state.playlistState.tracks && (<TrackCatalog data={state.playlistState.tracks} />)}
+            { state.playlistState.tracks && (<TrackCatalog data={state.playlistState.tracks} options={['add', 'listen']} />)}
           </Tabs.TabPane>
         </Tabs>
       </div>

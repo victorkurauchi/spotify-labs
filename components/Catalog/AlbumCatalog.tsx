@@ -18,7 +18,7 @@ const AlbumCatalog = ({ data }: Props) => {
       </Divider>
       <Row gutter={[16, 24]}>
         { data.items.map(album => (
-          <Col className="gutter-row" span={6}>
+          <Col className="gutter-row" span={6} key={album.id}>
             <Card
               hoverable
               cover={<img alt="example" src={album.images[1].url} />}

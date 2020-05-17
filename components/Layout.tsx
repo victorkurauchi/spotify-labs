@@ -1,10 +1,11 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { Layout, Menu, Row, Col, Avatar, Dropdown } from 'antd'
+import { Layout, Menu, Row, Col, Avatar, Dropdown, Badge } from 'antd'
 
 const { Header, Content, Footer } = Layout
 import { UserOutlined } from '@ant-design/icons'
 import { useAppStateContainer } from '../context/application'
+import Link from 'next/link'
 
 const menu = (
   <Menu>
@@ -29,6 +30,7 @@ const BaseLayout: React.FunctionComponent<Props> = ({
 }) => {
   const { state } = useAppStateContainer()
   const avatar = state.accountState?.account?.images[0].url
+  const playlistCount = state.playlistState?.playlist?.length
 
   const withAvatar = () => (
     <Avatar size="large" src={avatar} />
@@ -50,10 +52,19 @@ const BaseLayout: React.FunctionComponent<Props> = ({
           <Row justify="space-between">
             <Col>
               <div className="logo" />
-              <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                <Menu.Item key="1">Home</Menu.Item>
-                <Menu.Item key="2">Paylists</Menu.Item>
-                <Menu.Item key="3">Links</Menu.Item>
+              <Menu theme="dark" mode="horizontal">
+                <Menu.Item key="1">
+                  <Link href="/">
+                    <a style={{ color: 'white' }}>Home</a>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Badge count={playlistCount} offset={[0, -9]}>
+                    <Link href="/playlist">
+                      <a style={{ color: 'white' }}>Playlist</a>
+                    </Link>
+                  </Badge>
+                </Menu.Item>
               </Menu>
             </Col>
   
