@@ -9,7 +9,6 @@ import { SET_IN_BULK } from '../store/actionTypes';
 import AlbumCatalog from '../components/Catalog/AlbumCatalog';
 import TrackCatalog from '../components/Catalog/TrackCatalog';
 import ArtistCatalog from '../components/Catalog/ArtistCatalog';
-const debounce = require('lodash.debounce')
 
 const { Search } = Input
 
@@ -36,7 +35,7 @@ const IndexPage = () => {
           authorization: `Bearer ${window.localStorage.getItem('token')}`
         }
       })
-      
+
       const data = await res.json()
       
       if (data) {

@@ -1,23 +1,21 @@
 import React from 'react';
-import { Breadcrumb, Input, Row, Col, Button, Tabs, Card, Form, Radio } from 'antd'
+import { Breadcrumb, Input, Button, Card, Form } from 'antd'
 import Layout from '../components/Layout'
-import { getHost } from '../utils/config';
-import { fetchUser } from '../efffects';
+// import { getHost } from '../utils/config';
+// import { fetchUser } from '../efffects';
 import { useAppStateContainer } from '../context/application';
-import { SET_IN_BULK } from '../store/actionTypes';
+// import { SET_IN_BULK } from '../store/actionTypes';
 import TrackCatalog from '../components/Catalog/TrackCatalog';
 
 const PlaylistPage = () => {
   const { state } = useAppStateContainer()
   const { playlist } = state.playlistState
-  const [name, setName] = React.useState('')
-  const [description, setDescription] = React.useState('')
+  // const [name, setName] = React.useState('')
+  // const [description, setDescription] = React.useState('')
 
   const createPlaylist = (values: any) => {
     // http call
     console.log(values)
-    console.log(name)
-    console.log(description)
   }
 
   const [form] = Form.useForm()
@@ -48,7 +46,7 @@ const PlaylistPage = () => {
             name="register"
           >
             <Form.Item label="Playlist name" rules={[{ required: true }]}>
-              <Input placeholder="give your playlist a cool name" />
+              <Input placeholder="give your playlist a cool name" name="playlistName" />
             </Form.Item>
             <Form.Item label="Description" rules={[{ required: true }]}>
               <Input placeholder="any description?" name="description" />

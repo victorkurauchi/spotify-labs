@@ -22,7 +22,7 @@ const TrackCatalog = ({ data, options }: Props) => {
     }
   }
 
-  const renderActions = (item, options: string[]) => {
+  const renderActions = (item: any, options: string[]) => {
     const actions = [
       { key: 'add', comp: () => (<a href="#" onClick={() => addToPlaylist(item)} key="list-loadmore-edit">add to playlist</a>) },
       { key: 'listen', comp: () => (<a href={item.external_urls.spotify} target="_blank" key="list-loadmore-more">listen</a>) },
