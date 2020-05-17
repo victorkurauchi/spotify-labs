@@ -1,21 +1,25 @@
 import React from 'react';
-import { Breadcrumb, Input, Button, Card, Form } from 'antd'
+import { Breadcrumb, Input, Button, Card, Form, Checkbox, Spin } from 'antd'
 import Layout from '../components/Layout'
-// import { getHost } from '../utils/config';
-// import { fetchUser } from '../efffects';
-import { useAppStateContainer } from '../context/application';
-// import { SET_IN_BULK } from '../store/actionTypes';
-import TrackCatalog from '../components/Catalog/TrackCatalog';
+import { useAppStateContainer } from '../context/application'
+import TrackCatalog from '../components/Catalog/TrackCatalog'
+import { createPlaylistEffect } from '../efffects'
 
 const PlaylistPage = () => {
   const { state } = useAppStateContainer()
   const { playlist } = state.playlistState
-  // const [name, setName] = React.useState('')
-  // const [description, setDescription] = React.useState('')
+  const [loading, setLoading] = React.useState(false)
 
   const createPlaylist = (values: any) => {
-    // http call
-    console.log(values)
+    const body = {
+      description: values.description,
+      name: values.playlistName,
+      public: values.public,
+      tracks: state.playlistState.playlist
+    }
+
+    setLoading(true)
+    createPlaylistEffect(state.accountState.account!.id, body)
   }
 
   const [form] = Form.useForm()
@@ -37,23 +41,41 @@ const PlaylistPage = () => {
       </Breadcrumb>
       <div className="site-layout-content">
 
+        { loading && <Spin size="large" />}
+
         <Card>
           <Form
             {...formItemLayout}
-            layout="horizontal"
             form={form}
-            onFinish={createPlaylist}
             name="register"
+            layout="horizontal"
+            onFinish={createPlaylist}
+            scrollToFirstError
           >
-            <Form.Item label="Playlist name" rules={[{ required: true }]}>
-              <Input placeholder="give your playlist a cool name" name="playlistName" />
+
+            <Form.Item name="playlistName" label="Give it a cool name" rules={[{ required: true }]}>
+              <Input />
             </Form.Item>
-            <Form.Item label="Description" rules={[{ required: true }]}>
-              <Input placeholder="any description?" name="description" />
+
+            <Form.Item name="description" label="Any description?" rules={[{ required: true }]}>
+              <Input />
             </Form.Item>
+
+            <Form.Item {...buttonItemLayout}
+              name="public"
+              valuePropName="checked"
+              rules={[
+                { validator:(_, value) => value ? Promise.resolve() : Promise.reject('Should accept agreement') },
+              ]}
+            >
+              <Checkbox>
+                I want to make it public
+              </Checkbox>
+            </Form.Item>
+            
             <Form.Item {...buttonItemLayout}>
               <Button type="primary" htmlType="submit">
-                Create
+                Save
               </Button>
             </Form.Item>
           </Form>
