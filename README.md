@@ -46,3 +46,9 @@ Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&ut
 - See a neat catalog
 - Add tracks to your playlist
 - Save playlist into Spotify account
+
+## To do
+
+- Show users playlist
+- Autoplay in app
+- Manage loading states better
