@@ -1,6 +1,6 @@
 import { getHost } from '../utils/config'
 import { notification, message } from 'antd'
-import { SET_ACCOUNT_INFO, SET_OPERATION_STATUS } from '../store/actionTypes'
+import { SET_ACCOUNT_INFO, SET_OPERATION_STATUS, SET_USER_PLAYLIST } from '../store/actionTypes'
 import { OperationStatus } from '../store/reducers/playlist'
 
 export async function fetchUser(dispatch: Function) {
@@ -72,4 +72,27 @@ export async function createPlaylistEffect(userId: number, data: any, dispatch: 
 
   message.success('Well done, Your playlist was succesfully created!')
   dispatch({ type: SET_OPERATION_STATUS, payload: OperationStatus.FULFILLED })
+}
+
+// https://api.spotify.com/v1/users/{user_id}/playlists
+export async function getUserPlaylistEffect(userId: number, dispatch: Function) {
+  const url = getHost()
+  const res = await fetch(`${url}/users/${userId}/playlists?limit=50`, {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${window.localStorage.getItem('token')}`
+    }
+  })
+
+  const response = await res.json()
+
+  console.log(response)
+
+  if (response.error) {
+    message.error(`Code: ${response.error.status} / ${response.error.message}`)
+    dispatch({ type: SET_OPERATION_STATUS, payload: OperationStatus.ERRORED })
+    return
+  }
+
+  dispatch({ type: SET_USER_PLAYLIST, payload: response.items })
 }

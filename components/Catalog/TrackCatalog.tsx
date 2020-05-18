@@ -1,5 +1,5 @@
 import React from 'react';
-import { Empty, List, Skeleton, Avatar } from 'antd'
+import { Empty, List, Skeleton, Avatar, Card } from 'antd'
 import { useAppStateContainer } from '../../context/application';
 import { ADD_TRACK_TO_PLAYLIST } from '../../store/actionTypes';
 
@@ -33,27 +33,29 @@ const TrackCatalog = ({ data, options }: Props) => {
   }
 
   return (
-    <List
-      className="demo-loadmore-list"
-      // loading={initLoading}
-      itemLayout="horizontal"
-      // loadMore={loadMore}
-      dataSource={data.items}
-      renderItem={item => (
-        <List.Item actions={renderActions(item, options)}>
-          <Skeleton avatar title={false} loading={false} active>
-            <List.Item.Meta
-              avatar={
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-              }
-              title={<a href="https://ant.design">{item.name}</a>}
-              description={`By ${item.artists[0].name} - Popularity ${item.popularity}/100`}
-            />
-            <div>content</div>
-          </Skeleton>
-        </List.Item>
-      )}
-    />
+    <Card>
+      <List
+        className="demo-loadmore-list"
+        // loading={initLoading}
+        itemLayout="horizontal"
+        // loadMore={loadMore}
+        dataSource={data.items}
+        renderItem={item => (
+          <List.Item actions={renderActions(item, options)}>
+            <Skeleton avatar title={false} loading={false} active>
+              <List.Item.Meta
+                avatar={
+                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                }
+                title={<a href="https://ant.design">{item.name}</a>}
+                description={`By ${item.artists[0].name} - Popularity ${item.popularity}/100`}
+              />
+              <div>content</div>
+            </Skeleton>
+          </List.Item>
+        )}
+      />
+    </Card>
   );
 } 
 export default TrackCatalog

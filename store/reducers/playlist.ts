@@ -1,5 +1,5 @@
 import { Action } from '../../interfaces/action'
-import { SET_TRACKS, SET_ALBUMS, SET_ARTISTS, SET_IN_BULK, ADD_TRACK_TO_PLAYLIST, SET_OPERATION_STATUS } from '../actionTypes'
+import * as types from '../actionTypes'
 
 export type PlaylistStateType = {
   tracks: { items: any[] };
@@ -7,6 +7,7 @@ export type PlaylistStateType = {
   artists: { items: any[] };
   playlist: any[];
   operationStatus: string;
+  userExistingPlaylists: any[];
 }
 
 export enum OperationStatus {
@@ -21,24 +22,27 @@ export const playlistInitialState = {
   albums: { items: [] },
   artists: { items: [] },
   playlist: [],
-  operationStatus: OperationStatus.STANDBY
+  operationStatus: OperationStatus.STANDBY,
+  userExistingPlaylists: [],
 };
 
 export const playlistReducer = (state: PlaylistStateType, action: Action) => {
   switch (action.type) {
-    case SET_IN_BULK:
+    case types.SET_IN_BULK:
       const { tracks, albums, artists } = action.payload
       return { ...state, tracks, albums, artists }
-    case SET_TRACKS:
+    case types.SET_TRACKS:
       return { ...state, tracks: action.payload }
-    case SET_ALBUMS:
+    case types.SET_ALBUMS:
       return { ...state, albums: action.payload }
-    case SET_ARTISTS:
+    case types.SET_ARTISTS:
       return { ...state, artists: action.payload }
-    case ADD_TRACK_TO_PLAYLIST:
+    case types.ADD_TRACK_TO_PLAYLIST:
       return { ...state, playlist: [...state.playlist, action.payload] }
-    case SET_OPERATION_STATUS:
+    case types.SET_OPERATION_STATUS:
       return { ...state, operationStatus: action.payload }
+    case types.SET_USER_PLAYLIST:
+      return { ...state, userExistingPlaylists: action.payload, operationStatus: OperationStatus.FULFILLED }
     default: 
       return state;
   }
