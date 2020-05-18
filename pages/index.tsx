@@ -73,16 +73,20 @@ const IndexPage = () => {
           </Row>
         )}
 
-        <Row gutter={[16, 24]}>
-          <Col className="gutter-row" span={12} offset={6}>
-            <Search
-              placeholder="Lets bring you some songs :)"
-              enterButton="Search"
-              size="large"
-              onSearch={applySearch}
-            />
-          </Col>
-        </Row>
+        {
+          state.accountState.account && (
+            <Row gutter={[16, 24]}>
+              <Col className="gutter-row" span={12} offset={6}>
+                <Search
+                  placeholder="Please type an artist name to get more relevant results :)"
+                  enterButton="Search"
+                  size="large"
+                  onSearch={applySearch}
+                />
+              </Col>
+            </Row>
+          )
+        }
 
         <Tabs defaultActiveKey="1" onChange={callback}>
           <Tabs.TabPane tab="Catalog" key="1">

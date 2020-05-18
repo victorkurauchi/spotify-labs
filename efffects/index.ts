@@ -29,6 +29,7 @@ export async function fetchUser(dispatch: Function) {
   dispatch({ type: SET_ACCOUNT_INFO, payload: response })
 }
 
+// TODO add items to playlist
 export async function createPlaylistEffect(userId: number, data: any) {
   const url = getHost()
   const res = await fetch(`${url}/users/${userId}/playlists`, {
