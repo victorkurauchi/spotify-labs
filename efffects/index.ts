@@ -29,12 +29,17 @@ export async function fetchUser(dispatch: Function) {
   dispatch({ type: SET_ACCOUNT_INFO, payload: response })
 }
 
-// TODO add items to playlist
 export async function createPlaylistEffect(userId: number, data: any) {
+  const body = {
+    description: data.description,
+    name: data.playlistName,
+    public: data.public,
+  }
+
   const url = getHost()
   const res = await fetch(`${url}/users/${userId}/playlists`, {
     method: 'POST',
-    body: JSON.stringify(data),
+    body: JSON.stringify(body),
     headers: {
       authorization: `Bearer ${window.localStorage.getItem('token')}`
     }
@@ -42,13 +47,27 @@ export async function createPlaylistEffect(userId: number, data: any) {
 
   const response = await res.json()
 
-  console.log(response)
+  console.log('response', response)
   
   if (response.error) {
     console.log(`Code: ${response.error.status} / ${response.error.message}`)
     message.error(`Code: ${response.error.status} / ${response.error.message}`)
     return
   }
+
+  const playlistRequest = await fetch(`${url}/playlists/${response.id}/tracks`, {
+    method: 'POST',
+    body: JSON.stringify({
+      uris: data.tracks.map((track: any) => track.uri)
+    }),
+    headers: {
+      authorization: `Bearer ${window.localStorage.getItem('token')}`
+    }
+  })
+
+  const playlistResponse = await playlistRequest.json()
+
+  console.log('playlistResponse', playlistResponse)
 
   message.success('Well done, Your playlist was succesfully created!')
 }
