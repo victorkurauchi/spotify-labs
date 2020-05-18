@@ -32,7 +32,7 @@ export async function fetchUser(dispatch: Function) {
 export async function createPlaylistEffect(userId: number, data: any) {
   const body = {
     description: data.description,
-    name: data.playlistName,
+    name: data.name,
     public: data.public,
   }
 
