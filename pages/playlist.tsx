@@ -4,11 +4,20 @@ import Layout from '../components/Layout'
 import { useAppStateContainer } from '../context/application'
 import TrackCatalog from '../components/Catalog/TrackCatalog'
 import { createPlaylistEffect } from '../efffects'
+import { OperationStatus } from '../store/reducers/playlist';
 
 const PlaylistPage = () => {
-  const { state } = useAppStateContainer()
+  const { state, dispatch } = useAppStateContainer()
   const { playlist } = state.playlistState
   const [loading, setLoading] = React.useState(false)
+
+  React.useEffect(() => {
+    const { operationStatus } = state.playlistState
+    if (operationStatus === OperationStatus.ERRORED 
+        || operationStatus === OperationStatus.ERRORED) {
+          setLoading(false)
+        }
+  }, [state.playlistState.operationStatus])
 
   const createPlaylist = (values: any) => {
     const body = {
@@ -19,7 +28,7 @@ const PlaylistPage = () => {
     }
 
     setLoading(true)
-    createPlaylistEffect(state.accountState.account!.id, body)
+    createPlaylistEffect(state.accountState.account!.id, body, dispatch)
   }
 
   const [form] = Form.useForm()

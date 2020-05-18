@@ -1,6 +1,7 @@
 import { getHost } from '../utils/config'
 import { notification, message } from 'antd'
-import { SET_ACCOUNT_INFO } from '../store/actionTypes'
+import { SET_ACCOUNT_INFO, SET_OPERATION_STATUS } from '../store/actionTypes'
+import { OperationStatus } from '../store/reducers/playlist'
 
 export async function fetchUser(dispatch: Function) {
   const url = getHost()
@@ -29,7 +30,7 @@ export async function fetchUser(dispatch: Function) {
   dispatch({ type: SET_ACCOUNT_INFO, payload: response })
 }
 
-export async function createPlaylistEffect(userId: number, data: any) {
+export async function createPlaylistEffect(userId: number, data: any, dispatch: Function) {
   const body = {
     description: data.description,
     name: data.name,
@@ -50,8 +51,8 @@ export async function createPlaylistEffect(userId: number, data: any) {
   console.log('response', response)
   
   if (response.error) {
-    console.log(`Code: ${response.error.status} / ${response.error.message}`)
     message.error(`Code: ${response.error.status} / ${response.error.message}`)
+    dispatch({ type: SET_OPERATION_STATUS, payload: OperationStatus.ERRORED })
     return
   }
 
@@ -70,4 +71,5 @@ export async function createPlaylistEffect(userId: number, data: any) {
   console.log('playlistResponse', playlistResponse)
 
   message.success('Well done, Your playlist was succesfully created!')
+  dispatch({ type: SET_OPERATION_STATUS, payload: OperationStatus.FULFILLED })
 }
