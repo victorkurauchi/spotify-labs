@@ -14,7 +14,7 @@ const PlaylistPage = () => {
   React.useEffect(() => {
     const { operationStatus } = state.playlistState
     if (operationStatus === OperationStatus.ERRORED 
-        || operationStatus === OperationStatus.ERRORED) {
+        || operationStatus === OperationStatus.FULFILLED) {
           setLoading(false)
         }
   }, [state.playlistState.operationStatus])
