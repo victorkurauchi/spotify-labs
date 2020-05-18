@@ -10,10 +10,10 @@ import Link from 'next/link'
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <a href="http://www.alipay.com/">Profile</a>
+      <a href="/">Profile</a>
     </Menu.Item>
     <Menu.Item key="1">
-      <a href="http://www.taobao.com/">Settings</a>
+      <a href="/">Settings</a>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3">Logout</Menu.Item>
